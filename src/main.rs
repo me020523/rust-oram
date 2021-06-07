@@ -1,7 +1,9 @@
 mod block;
+mod bucket;
 
 use bincode;
 use block::Block;
+use bucket::Bucket;
 use std::option::Option;
 
 fn main() {
@@ -27,5 +29,12 @@ fn demo_code() {
 fn demo_code2() {
     let mut b = Block::empty();
     b.initialize(10, 10);
-    let b2 = Block::from(&b.serialize()[..]);
+    let b2 = Block::deserialize(&b.serialize()[..]);
+    //println!("{:#?}", b2);
+
+    let mut bucket = Bucket::empty();
+    bucket.z = 4;
+    bucket.initialize(10, 10);
+    bucket.sample_randomness();
+    bucket.display_blocks();
 }

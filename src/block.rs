@@ -44,19 +44,27 @@ impl Block {
         self.generate_r();
     }
 
-    fn generate_data(&mut self, fdata_size: u32) {
+    pub fn generate_data(&mut self, fdata_size: u32) {
         for i in 0..fdata_size {
             self.data.push((i as u8 % 26) + 64);
         }
     }
 
-    fn generate_r(&mut self) {
+    pub fn generate_r(&mut self) {
         for i in 0..NONCE_LENGTH {
             self.r.push(i as u8)
         }
     }
 
-    fn is_dummy(&self, gn: u32) -> bool {
+    pub fn is_dummy(&self, gn: u32) -> bool {
         self.id == gn
+    }
+
+    pub fn reset(&mut self, data_size: u32, gn: u32) {
+        self.id = gn;
+        self.tree_label = 0;
+
+        self.data.clear();
+        self.generate_data(data_size);
     }
 }
